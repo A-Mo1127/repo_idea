@@ -9,4 +9,7 @@ public interface GitMapper {
     public void add();
 
     public void update();
+
+    //测试切换分支
+    public void testGit();
 }
