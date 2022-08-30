@@ -13,5 +13,8 @@ public interface TestMapper {
 
     /*对test表进行查询所有*/
     public List<Test> findAllTest();
+    
+    //做出修改
+     public List<Test> findAllTest2();
 
 }
