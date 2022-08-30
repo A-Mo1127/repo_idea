@@ -16,6 +16,17 @@ public interface TestMapper {
     
     //做出修改
      public List<Test> findAllTest2();
+    
+    //测试产生冲突
+    public void test11();
+    public void test22();
+    public void test33();
+    public void test44();
+    public void test55();
+    public void test86();
+    public void test67();
+    public void test78();
+    
 
      //测试产生冲突
     public void test1();
