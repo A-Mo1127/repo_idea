@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myLagou.dao.RoleMapper">
+
+    <!-- /*查询所有角色&根据条件进行查询*/
+    public List<Role> findAllRole(Role role);//根据条件查询时有参数-->
+    <select id="findAllRole" resultType="com.myLagou.entity.Role" parameterType="com.myLagou.entity.Role">
+
+        select * from roles
+        <where>
+            <if test="name != null and name != '' ">
+                and name = #{name}
+            </if>
+        </where>
+
+    </select>
+
+
+<!--    /*根据角色id查询改角色关联的菜单信息*/
+    public List<Integer> findMenuByRoleId(Integer roleId);-->
+    <select id="findMenuByRoleId" resultType="int" parameterType="int">
+        select m.id
+        from roles r inner join role_menu_relation rm on r.id = rm.role_id
+                     inner join menu m on m.id = rm.menu_id where r.id = #{id}
+    </select>
+
+
+    <!--/*根据roleId清空角色和菜单的中间表关联关系*/
+    public void deleteRoleContextMenu(Integer roleId);-->
+    <delete id="deleteRoleContextMenu" parameterType="int">
+        delete from role_menu_relation where role_id = #{rid}
+    </delete>
+
+
+ <!--   /*为角色分配菜单信息*/
+    public void saveRoleContextMenu(Role_menu_relation role_menu_relation);-->
+    <insert id="saveRoleContextMenu" parameterType="com.myLagou.entity.Role_menu_relation">
+        insert into role_menu_relation
+        values (null, #{menuId},#{roleId},#{createdTime},#{updatedTime}, #{createdBy},  #{updatedby})
+    </insert>
+
+
+
+    <!--/*添加角色*/
+    public void saveRole(Role role);-->
+    <insert id="saveRole" parameterType="com.myLagou.entity.Role">
+        insert into roles
+        values (null ,  #{code}, #{name}, #{description}, #{createdTime}, #{updatedTime},#{createdBy}, #{updatedBy})
+    </insert>
+
+
+    <!--/*修改角色*/
+    public void updateRole(Role role);-->
+    <update id="updateRole" parameterType="com.myLagou.entity.Role">
+        update roles set code = #{code}, name = #{name}, description = #{description}, updated_time = #{updatedTime},
+        updated_by = #{updatedBy}
+
+    </update>
+
+
+
+    <!--/*删除角色*/
+    public void deleteRole(Integer roleId);-->
+    <delete id="deleteRole" parameterType="int">
+        delete from roles where id = #{roleId}
+    </delete>
+
+</mapper>

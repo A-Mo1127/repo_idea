@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myLagou.dao.MenuMapper">
+    <!--嵌套查询子级菜单-->
+    <resultMap id="menuResult" type="com.myLagou.entity.Menu">
+        <!--Menu类普通属性的映射配置-->
+        <id column="id" property="id"></id>
+        <result column="href" property="href"></result>
+        <result column="icon" property="icon"></result>
+        <result column="name" property="name"></result>
+        <result column="parent_id" property="parentId"></result>
+        <result column="description" property="description"></result>
+        <result column="orderNum" property="orderNum"></result>
+        <result column="shown" property="shown"></result>
+        <result column="created_time" property="createdTime"></result>
+        <result column="updated_time" property="updatedTime"></result>
+        <result column="created_by" property="createdBy"></result>
+        <result column="updated_by" property="updatedBy"></result>
+
+        <!--查询子菜单-->
+        <collection property="subMenuList" ofType="com.myLagou.entity.Menu"
+                    select="findAllMenu"
+                    column="id">
+        </collection>
+    </resultMap>
+    <!--/*查询所有父子菜单信息*/
+    public List<Menu> findAllMenu(int pid);//在嵌套查询子级菜单时需要父级的id-->
+    <select id="findAllMenu" resultMap="menuResult" parameterType="int">
+
+        select * from menu where parent_id = #{id};
+    </select>
+
+
+    <!--/*查询所有菜单信息*/
+    public List<Menu> findMenus();-->
+    <select id="findMenus" resultType="com.myLagou.entity.Menu">
+        select * from menu
+    </select>
+
+
+    <!--  /*根据id查询menu信息*/
+    public Menu findMenuById(Integer id);-->
+    <select id="findMenuById" resultType="com.myLagou.entity.Menu" parameterType="int">
+        select * from menu where id = #{id}
+    </select>
+
+
+    <!--/*新增权限(菜单)*/
+    public void saveMenu(Menu menu);-->
+    <insert id="saveMenu" parameterType="com.myLagou.entity.Menu">
+        insert into menu
+        values (null, #{parentId}, #{href}, #{icon}, #{name}, #{description},
+        #{orderNum}, #{shown}, #{level}, #{createdTime}, #{updatedTime},
+        #{createdBy}, #{updatedBy})
+    </insert>
+
+
+
+   <!-- /*修改权限(菜单)*/
+    public void updateMenu(Menu menu);-->
+    <update id="updateMenu" parameterType="com.myLagou.entity.Menu">
+        update menu set
+            parent_id = #{parentId}, href = #{href}, icon = #{icon}, name = #{name}, description = #{description},
+            order_num= #{orderNum}, shown = #{shown}, level = #{level}, updated_time = #{updatedTime}, updated_by = #{updatedBy}
+        where id = #{id}
+
+    </update>
+
+
+</mapper>

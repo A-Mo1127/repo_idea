@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--springmvc的核心配置文件-->
+
+    <!--1、注解扫描-->
+    <context:component-scan base-package="com.myLagou.controller"></context:component-scan>
+
+    <!--2、mvc注解增强   也就是显示的配置了处理器解析器和处理器适配器-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!--3、视图解析器，前后端项目分离时，后端只给前端返回json串，所以暂时不要配置，当有视图跳转的时候再配置-->
+
+    <!--4、静态资源放行-->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <!--5.配置文件解析器-->
+    <!-- 此处id为固定写法，不能随便取名-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1048576"></property>
+    </bean>
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myLagou.dao.PromotionSpaceMapper">
+
+    <!--查询所有广告列表-->
+    <select id="findAllPromotionSpace" resultType="com.myLagou.entity.PromotionSpace">
+        select * from promotion_space
+    </select>
+
+    <!--/*新增广告位*/
+    public void savePromotionSpace(PromotionSpace promotionSpace);-->
+    <insert id="savePromotionSpace" parameterType="com.myLagou.entity.PromotionSpace">
+        insert into promotion_space()
+        values(null,#{name},#{spaceKey},#{createTime},#{updateTime},#{isDel})
+    </insert>
+
+    <!--/*根据ID查询广告位*/
+    public PromotionSpace finPromotionSpaceById(Integer id);-->
+    <select id="findPromotionSpaceById" resultType="com.myLagou.entity.PromotionSpace" parameterType="int">
+        select id,name from promotion_space where id = #{id}
+
+    </select>
+
+    <!-- /*根据ID修改广告位*/-->
+    <update id="updatePromotion" parameterType="com.myLagou.entity.PromotionSpace">
+        update promotion_space set name = #{name}, updateTime = #{updateTime}
+        where id = #{id}
+    </update>
+
+
+</mapper>
